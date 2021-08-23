@@ -38,6 +38,7 @@ namespace Consumer
                              consumer: consumer);
 
         Console.ReadLine();
+
       }
     }
   }
