@@ -37,9 +37,11 @@ namespace Consumer
                              autoAck: true,// indicamos o consumo da msg
                              consumer: consumer);
 
+
         Console.ReadLine();
 
       }
     }
   }
 }
+//http://localhost:15672/#/ dashboard
