@@ -28,9 +28,19 @@ namespace Consumer
 
         consumer.Received += (model, ea) =>
         {
-          var body = ea.Body.ToArray();
-          var message = Encoding.UTF8.GetString(body); // recebe a msg da fila e converte para string e imprime no console a mensagem
-          Console.WriteLine($" [X] Mensagem Reebida: {message}");
+
+          try
+          {
+            var body = ea.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body); // recebe a msg da fila e converte para string e imprime no console a mensagem
+            Console.WriteLine($" [X] Mensagem Reebida: {message}");
+            //channel.BasicAck(ea.DeliveryTag, false);
+          }
+          catch (Exception ex)
+          {
+            //log ex
+            channel.BasicNack(ea.DeliveryTag, false, true);
+          }
         };
 
         channel.BasicConsume(queue:"saudacao_1",

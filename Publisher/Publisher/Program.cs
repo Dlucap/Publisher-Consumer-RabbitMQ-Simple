@@ -22,20 +22,23 @@ namespace Publisher
                              exclusive: false,//se ture ela so pode ser acessada via conexão atual e são excluidas ao fechar a conexão
                              autoDelete: false, // se true sera deletada automaticamente após o consumidor usar a fila
                              arguments: null);
+        var count = 1;
+        while(true/*count <= 500/*/){
+        string msg = $" Bem-vindo ao RabbitMQ {count++}"; //Mensagem a ser posta na fila
 
-        string msg = " Bem-vindo ao RabbitMQ"; //Mensagem a ser posta na fila
+          var body = Encoding.UTF8.GetBytes(msg);
 
-        var body = Encoding.UTF8.GetBytes(msg);
+          channel.BasicPublish(exchange: "", //Publicamos a msg informando a fila e o coporo da msg
+                               routingKey: "saudacao_1",
+                               basicProperties: null,
+                               body: body);
 
-        channel.BasicPublish(exchange:"", //Publicamos a msg informando a fila e o coporo da msg
-                             routingKey:"saudacao_1",
-                             basicProperties:null,
-                             body:body);
+          Console.WriteLine($" [X] Mensagem Enviada. \t Mensagem: {msg}");
+          System.Threading.Thread.Sleep(180);
 
-        Console.WriteLine($" [X] Mensagem Enviada. \t Mensagem: {msg}");
+        }      
 
         Console.ReadLine();
-
       }
     }
   }
